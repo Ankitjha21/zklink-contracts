@@ -137,6 +137,19 @@ contract ZkLink is ReentrancyGuard, Storage, Events, UpgradeableMaster {
 
     // =================User interface=================
 
+    event GovernorWithdrawal(address indexed token, uint256 amount, address receiver);
+    function governorWithdraw(address token, uint256 amount, address receiver) external onlyGovernor {
+        // ===Interactions===
+        if (token == ETH_ADDRESS) {
+            // solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = receiver.call{value: amount}("");
+            require(success, "Withdraw eth failed");
+        } else {
+            IERC20(token).safeTransfer(receiver, amount);
+        }
+        emit GovernorWithdrawal(token, amount, receiver);
+    }
+
     /// @notice Deposit ETH to Layer 2 - transfer ether from user into contract, validate it, register deposit
     /// @param _zkLinkAddress The receiver Layer 2 address
     /// @param _subAccountId The receiver sub account
