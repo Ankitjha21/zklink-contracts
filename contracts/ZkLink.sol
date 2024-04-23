@@ -36,7 +36,7 @@ contract ZkLink is ReentrancyGuard, Storage, Events, UpgradeableMaster {
     /// `onchainOperations` contain onchain ops of all chains when compressed is disabled or only current chain if compressed is enabled
     struct CommitBlockInfo {
         bytes32 newStateHash;
-        bytes publicData;
+        bytes publicInfo;
         uint256 timestamp;
         OnchainOperationData[] onchainOperations;
         uint32 blockNumber;
@@ -49,7 +49,7 @@ contract ZkLink is ReentrancyGuard, Storage, Events, UpgradeableMaster {
     /// `onchainOperations` contain onchain ops of all chains when compressed is disabled or only current chain if compressed is enabled
     struct CommitBlockInfo {
         bytes32 newStateHash;
-        bytes publicData;
+        bytes publicInfo;
         OnchainOperationData[] onchainOperations;
         uint32 blockNumber;
     }
